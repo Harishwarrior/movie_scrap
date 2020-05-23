@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'movie.dart';
+import 'package:moviescrap/Services/fetch_json.dart';
+
 import 'details_page.dart';
 
+Fetch fetch = new Fetch();
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,22 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<List<Movie>> _getMovies() async {
-    var data = await http
-        .get("https://harishwarrior.github.io/JsonHosting/movie.json");
-    var jsonData = json.decode(data.body);
+  Fetch fetch = new Fetch();
 
-    List<Movie> movies = [];
-
-    for (var u in jsonData) {
-      Movie movie = Movie(
-          name: u["name"],
-          magnets: u["magnets"],
-          normalized_name: u["normalized_name"]);
-      movies.add(movie);
-    }
-
-    return movies;
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -53,37 +41,85 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: MovieSearch());
+            },
+          ),
+        ],
       ),
-      body: Container(
-        child: FutureBuilder(
-          future: _getMovies(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(child: Center(child: Text("Loading...")));
-            } else {
-              return ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    elevation: 10.0,
-                    child: ListTile(
-                      title: Text(snapshot.data[index].normalized_name),
-//                    subtitle: Text(snapshot.data[index].magnets),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) =>
-                                DetailPage(snapshot.data[index]),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              );
-            }
-          },
+    );
+  }
+}
+
+class MovieSearch extends SearchDelegate {
+  final suggestMovie = ["avenger", "ant-man"];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // implement buildActions
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    //implement buildLeading
+    return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
         ),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container(
+      child: FutureBuilder(
+        future: fetch.getMovies(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Container(child: Center(child: Text("Loading...")));
+          } else {
+            return ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  elevation: 5.0,
+                  child: ListTile(
+                    title: Text(
+                      snapshot.data[index].normalized_name,
+                    ),
+//                    subtitle: Text(snapshot.data[index].magnets),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) =>
+                              DetailPage(snapshot.data[index]),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }
