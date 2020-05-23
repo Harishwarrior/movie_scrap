@@ -13,7 +13,7 @@ class DetailPage extends StatelessWidget {
       commentWidgets.add(
         RaisedButton(
           child: Text(
-            'Link',
+            "link ",
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
