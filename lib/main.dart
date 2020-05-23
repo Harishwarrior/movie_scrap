@@ -3,7 +3,9 @@ import 'package:moviescrap/Services/fetch_json.dart';
 
 import 'details_page.dart';
 
+Future<List> data;
 Fetch fetch = new Fetch();
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -29,10 +31,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Fetch fetch = new Fetch();
-
   @override
   void initState() {
+    data = fetch.getMovies(); //fetch movies when start of the app only
     super.initState();
   }
 
@@ -91,7 +92,7 @@ class MovieSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return Container(
       child: FutureBuilder(
-        future: fetch.getMovies(),
+        future: data, //future list
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return Container(child: Center(child: Text("Loading...")));
