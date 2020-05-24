@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
+        fontFamily: 'Nunito',
         primaryColor: Colors.white,
       ),
       home: new MyHomePage(title: 'Movie DB'),
