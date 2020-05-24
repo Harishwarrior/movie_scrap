@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
       ),
       home: new MyHomePage(title: 'Movie DB'),
     );
@@ -41,7 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        centerTitle: true,
+        title: new Text(
+          widget.title,
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -56,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MovieSearch extends SearchDelegate {
-  final suggestMovie = ["avenger", "ant-man"];
+//  final suggestMovie = ["avenger", "ant-man"];
 
   @override
   List<Widget> buildActions(BuildContext context) {

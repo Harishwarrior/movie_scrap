@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'movie.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'movie.dart';
 
 class DetailPage extends StatelessWidget {
   final Movie movie;
@@ -8,18 +10,28 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey =
+        new GlobalKey<ScaffoldState>();
     var commentWidgets = List<Widget>();
     for (String magnet in movie.magnets) {
       commentWidgets.add(
-        RaisedButton(
+        OutlineButton(
+          highlightColor: Colors.blue,
           child: Text(
             "link ",
             style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
+                color: Colors.blue,
+                fontWeight: FontWeight.w500,
                 fontSize: 18.0),
           ),
           color: Colors.pinkAccent,
+          onLongPress: () {
+            Clipboard.setData(new ClipboardData(text: magnet));
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text('Magnet link copied to clipboard'),
+              duration: Duration(seconds: 3),
+            ));
+          },
           onPressed: () async {
             var url = magnet;
             if (await canLaunch(url)) {
@@ -33,6 +45,7 @@ class DetailPage extends StatelessWidget {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(),
       body: SafeArea(
         child: Column(
