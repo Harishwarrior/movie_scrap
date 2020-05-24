@@ -48,9 +48,7 @@ class _HomePageState extends State<HomePage> {
       body: new Column(
         children: <Widget>[
           new Container(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             child: new Padding(
               padding: const EdgeInsets.all(8.0),
               child: new Card(
@@ -76,23 +74,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          new Expanded(
+          Expanded(
             child: _searchResult.length != 0 || controller.text.isNotEmpty
-                ? new ListView.builder(
+                ? ListView.builder(
               itemCount: _searchResult.length,
-              itemBuilder: (context, i) {
-                return new Card(
+              itemBuilder: (context, index) {
+                return Card(
                   elevation: 5.0,
-                  child: new ListTile(
-                    title: new Text(
-                      _searchResult[i].normalized_name,
+                  child: ListTile(
+                    title: Text(
+                      _searchResult[index].normalized_name,
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
-                        new MaterialPageRoute(
+                        MaterialPageRoute(
                           builder: (context) =>
-                              DetailPage(_userDetails[i]),
+                              DetailPage(_searchResult[index]),
                         ),
                       );
                     },
@@ -100,19 +98,19 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             )
-                : new ListView.builder(
+                : ListView.builder(
               itemCount: _userDetails.length,
               itemBuilder: (context, index) {
-                return new Card(
+                return Card(
                   elevation: 5.0,
-                  child: new ListTile(
-                    title: new Text(
+                  child: ListTile(
+                    title: Text(
                       _userDetails[index].normalized_name,
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
-                        new MaterialPageRoute(
+                        MaterialPageRoute(
                           builder: (context) =>
                               DetailPage(_userDetails[index]),
                         ),
