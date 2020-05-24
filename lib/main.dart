@@ -101,8 +101,8 @@ class MovieSearch extends SearchDelegate {
       child: FutureBuilder(
         future: data, //future list
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return Container(child: Center(child: Text("Loading...")));
+          if (!snapshot.hasData || snapshot.data.isEmpty) {
+            return Center(child: CircularProgressIndicator());
           } else {
             return ListView.builder(
               itemBuilder: (BuildContext context, int index) {
