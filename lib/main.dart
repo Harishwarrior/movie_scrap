@@ -8,6 +8,10 @@ import 'details_page.dart';
 
 void main() => runApp(new MaterialApp(
       home: new HomePage(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
     ));
 
@@ -34,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     getUserDetails();
   }
 
@@ -42,29 +45,67 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Movie DB'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Movie",
+              style:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              "Scrap",
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+            )
+          ],
+        ),
+        centerTitle: true,
         elevation: 0.0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.refresh,
+        ),
+        onPressed: () {
+          setState(() {
+            getUserDetails();
+          });
+        },
       ),
       body: new Column(
         children: <Widget>[
           new Container(
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
             child: new Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:
+              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
               child: new Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
                 elevation: 3.0,
                 child: new ListTile(
-                  leading: new Icon(Icons.search),
+                  leading: new Icon(
+                    Icons.search,
+                    color: Colors.blue,
+                  ),
                   title: new TextField(
                     controller: controller,
                     decoration: new InputDecoration(
                       hintText: 'Search',
+                      hintStyle: TextStyle(fontSize: 18.0),
                       border: InputBorder.none,
                     ),
                     onChanged: onSearchTextChanged,
                   ),
                   trailing: new IconButton(
-                    icon: new Icon(Icons.close),
+                    icon: new Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ),
                     onPressed: () {
                       controller.clear();
                       onSearchTextChanged('');
@@ -79,21 +120,32 @@ class _HomePageState extends State<HomePage> {
                 ? ListView.builder(
               itemCount: _searchResult.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5.0,
-                  child: ListTile(
-                    title: Text(
-                      _searchResult[index].normalized_name,
+                return Container(
+                  child: Card(
+                    elevation: 5.0,
+                    child: ListTile(
+                      title: Text(
+                        _searchResult[index].name,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailPage(_searchResult[index]),
+                          ),
+                        );
+                      },
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(_searchResult[index]),
-                        ),
-                      );
-                    },
+                  ),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Colors.lightBlue,
+                        blurRadius: 0.1,
+                        offset: Offset(0.0, 0.5),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -105,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                   elevation: 5.0,
                   child: ListTile(
                     title: Text(
-                      _userDetails[index].normalized_name,
+                      _userDetails[index].name,
                     ),
                     onTap: () {
                       Navigator.push(
@@ -146,7 +198,7 @@ List<Movie> _searchResult = [];
 
 List<Movie> _userDetails = [];
 
-final String url = 'https://harishwarrior.github.io/JsonHosting/movie.json';
+final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
 
 class Movie {
   final String name;
