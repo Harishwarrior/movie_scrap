@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'details_page.dart';
+import 'settings.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(new MaterialApp(
       home: new HomePage(),
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               "Movie",
               style:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
             Text(
               "Scrap",
@@ -59,6 +59,16 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.settings, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => (Settings())),
+                );
+              }),
+        ],
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -76,12 +86,10 @@ class _HomePageState extends State<HomePage> {
       body: new Column(
         children: <Widget>[
           new Container(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             child: new Padding(
               padding:
-              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
               child: new Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -118,60 +126,60 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: _searchResult.length != 0 || controller.text.isNotEmpty
                 ? ListView.builder(
-              itemCount: _searchResult.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Card(
-                    elevation: 5.0,
-                    child: ListTile(
-                      title: Text(
-                        _searchResult[index].name,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DetailPage(_searchResult[index]),
+                    itemCount: _searchResult.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: Card(
+                          elevation: 5.0,
+                          child: ListTile(
+                            title: Text(
+                              _searchResult[index].name,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailPage(_searchResult[index]),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      new BoxShadow(
-                        color: Colors.lightBlue,
-                        blurRadius: 0.1,
-                        offset: Offset(0.0, 0.5),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            )
+                        ),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            new BoxShadow(
+                              color: Colors.lightBlue,
+                              blurRadius: 0.1,
+                              offset: Offset(0.0, 0.5),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
                 : ListView.builder(
-              itemCount: _userDetails.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5.0,
-                  child: ListTile(
-                    title: Text(
-                      _userDetails[index].name,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(_userDetails[index]),
+                    itemCount: _userDetails.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 5.0,
+                        child: ListTile(
+                          title: Text(
+                            _userDetails[index].name,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailPage(_userDetails[index]),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),
