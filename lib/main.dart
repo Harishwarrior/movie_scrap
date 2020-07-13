@@ -1,19 +1,40 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moviescrap/theme.dart';
+import 'package:moviescrap/theme_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'details_page.dart';
 import 'settings.dart';
-import 'package:provider/provider.dart';
 
-void main() => runApp(new MaterialApp(
-      home: new HomePage(),
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Colors.blue,
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.getInstance().then((prefs) {
+    var darkModeOn = prefs.getBool('darkMode') ?? true;
+    runApp(
+      ChangeNotifierProvider<ThemeNotifier>(
+        create: (context) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+        child: MyApp(),
       ),
-      debugShowCheckedModeBanner: false,
-    ));
+    );
+  });
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    return MaterialApp(
+      title: 'MovieScrap',
+      theme: themeNotifier.getTheme(),
+      home: HomePage(),
+    );
+  }
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,13 +45,13 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controller = new TextEditingController();
 
   // Get json result and convert it to model. Then add
-  Future<Null> getUserDetails() async {
+  Future<Null> getMovieMetadata() async {
     final response = await http.get(url);
     final responseJson = json.decode(response.body);
 
     setState(() {
-      for (Map user in responseJson) {
-        _userDetails.add(Movie.fromJson(user));
+      for (Map movie in responseJson) {
+        _userDetails.add(Movie.fromJson(movie));
       }
     });
   }
@@ -38,7 +59,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getUserDetails();
+    getMovieMetadata();
   }
 
   @override
@@ -50,8 +71,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Text(
               "Movie",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Text(
               "Scrap",
@@ -61,11 +81,13 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.settings, color: Colors.white),
+              icon: Icon(
+                Icons.settings,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => (Settings())),
+                  MaterialPageRoute(builder: (context) => (SettingsPage())),
                 );
               }),
         ],
@@ -79,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () {
           setState(() {
-            getUserDetails();
+            getMovieMetadata();
           });
         },
       ),
@@ -194,7 +216,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     _userDetails.forEach((userDetail) {
-      if (userDetail.normalized_name.contains(text))
+      if (userDetail.normalizedName.contains(text))
         _searchResult.add(userDetail);
     });
 
@@ -210,19 +232,19 @@ final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
 
 class Movie {
   final String name;
-  final String normalized_name;
+  final String normalizedName;
   final List magnets;
 
   Movie({
     this.name,
     this.magnets,
-    this.normalized_name,
+    this.normalizedName,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return new Movie(
         name: json['name'],
-        normalized_name: json['normalized_name'],
+        normalizedName: json['normalized_name'],
         magnets: json['magnets']);
   }
 }
