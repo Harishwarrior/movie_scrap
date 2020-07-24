@@ -38,34 +38,34 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => new _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController controller = new TextEditingController();
+  TextEditingController controller = TextEditingController();
+  bool completed;
 
   // Get json result and convert it to model. Then add
-  Future<Null> getMovieMetadata() async {
+  Future<List> getMovieMetadata() async {
     final response = await http.get(url);
     final responseJson = json.decode(response.body);
 
-    setState(() {
-      for (Map movie in responseJson) {
-        _userDetails.add(Movie.fromJson(movie));
-      }
-    });
-  }
+    for (Map movie in responseJson) {
+      _movieDetails.add(Movie.fromJson(movie));
+    }
+
+    return _movieDetails;
+  } //getMovieMetadata
 
   @override
   void initState() {
     super.initState();
-    getMovieMetadata();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -105,34 +105,34 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      body: new Column(
+      body: Column(
         children: <Widget>[
-          new Container(
+          Container(
             color: Theme.of(context).primaryColor,
-            child: new Padding(
+            child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
-              child: new Card(
+              child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 elevation: 3.0,
-                child: new ListTile(
-                  leading: new Icon(
+                child: ListTile(
+                  leading: Icon(
                     Icons.search,
                     color: Colors.blue,
                   ),
-                  title: new TextField(
+                  title: TextField(
                     controller: controller,
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Search',
                       hintStyle: TextStyle(fontSize: 18.0),
                       border: InputBorder.none,
                     ),
                     onChanged: onSearchTextChanged,
                   ),
-                  trailing: new IconButton(
-                    icon: new Icon(
+                  trailing: IconButton(
+                    icon: Icon(
                       Icons.close,
                       color: Colors.white,
                     ),
@@ -145,64 +145,77 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Expanded(
-            child: _searchResult.length != 0 || controller.text.isNotEmpty
-                ? ListView.builder(
-                    itemCount: _searchResult.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: Card(
-                          elevation: 5.0,
-                          child: ListTile(
-                            title: Text(
-                              _searchResult[index].name,
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailPage(_searchResult[index]),
+          FutureBuilder(
+              future: getMovieMetadata(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: _searchResult.length != 0 ||
+                            controller.text.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: _searchResult.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Card(
+                                  elevation: 5.0,
+                                  child: ListTile(
+                                    title: Text(
+                                      _searchResult[index].name,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailPage(_searchResult[index]),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.lightBlue,
+                                      blurRadius: 0.1,
+                                      offset: Offset(0.0, 0.5),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            itemCount: _movieDetails.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 5.0,
+                                child: ListTile(
+                                  title: Text(
+                                    _movieDetails[index].name,
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailPage(_movieDetails[index]),
+                                      ),
+                                    );
+                                  },
                                 ),
                               );
                             },
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            new BoxShadow(
-                              color: Colors.lightBlue,
-                              blurRadius: 0.1,
-                              offset: Offset(0.0, 0.5),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  )
-                : ListView.builder(
-                    itemCount: _userDetails.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 5.0,
-                        child: ListTile(
-                          title: Text(
-                            _userDetails[index].name,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(_userDetails[index]),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ),
+                  );
+                }
+              }),
         ],
       ),
     );
@@ -215,9 +228,9 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    _userDetails.forEach((userDetail) {
-      if (userDetail.normalizedName.contains(text))
-        _searchResult.add(userDetail);
+    _movieDetails.forEach((movieDetail) {
+      if (movieDetail.normalizedName.contains(text))
+        _searchResult.add(movieDetail);
     });
 
     setState(() {});
@@ -226,7 +239,7 @@ class _HomePageState extends State<HomePage> {
 
 List<Movie> _searchResult = [];
 
-List<Movie> _userDetails = [];
+List<Movie> _movieDetails = [];
 
 final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
 
@@ -242,7 +255,7 @@ class Movie {
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
-    return new Movie(
+    return Movie(
         name: json['name'],
         normalizedName: json['normalized_name'],
         magnets: json['magnets']);
