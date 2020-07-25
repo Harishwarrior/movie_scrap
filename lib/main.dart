@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'details_page.dart';
+import 'movie.dart';
 import 'settings.dart';
 
 void main() {
@@ -45,7 +46,12 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
   bool completed;
 
-  // Get json result and convert it to model. Then add
+  List<Movie> _searchResult = [];
+
+  List<Movie> _movieDetails = [];
+
+  final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
+
   Future<List> getMovieMetadata() async {
     final response = await http.get(url);
     final responseJson = json.decode(response.body);
@@ -150,7 +156,7 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
-                    child: CircularProgressIndicator(
+                    child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                     ),
                   );
@@ -221,43 +227,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  onSearchTextChanged(String text) async {
+  onSearchTextChanged(String text) {
     _searchResult.clear();
     if (text.isEmpty) {
-      setState(() {});
       return;
     }
-
     _movieDetails.forEach((movieDetail) {
       if (movieDetail.normalizedName.contains(text))
         _searchResult.add(movieDetail);
     });
-
-    setState(() {});
-  }
-}
-
-List<Movie> _searchResult = [];
-
-List<Movie> _movieDetails = [];
-
-final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
-
-class Movie {
-  final String name;
-  final String normalizedName;
-  final List magnets;
-
-  Movie({
-    this.name,
-    this.magnets,
-    this.normalizedName,
-  });
-
-  factory Movie.fromJson(Map<String, dynamic> json) {
-    return Movie(
-        name: json['name'],
-        normalizedName: json['normalized_name'],
-        magnets: json['magnets']);
   }
 }
