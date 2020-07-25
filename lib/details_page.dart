@@ -6,7 +6,18 @@ import 'main.dart';
 
 class DetailPage extends StatelessWidget {
   final Movie movie;
+
   DetailPage(this.movie);
+
+  String fileSize(String url) {
+    RegExp exp = new RegExp(r"[0-9]+(\.[0-9])?(GB|MB|gb|mb)");
+    String match = exp.stringMatch(Uri.decodeComponent(url));
+    if (match == null) {
+      return 'link';
+    } else {
+      return match;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class DetailPage extends StatelessWidget {
         OutlineButton(
           highlightColor: Colors.blue,
           child: Text(
-            "link ",
+            fileSize(magnet),
             style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.w500,
@@ -39,7 +50,7 @@ class DetailPage extends StatelessWidget {
             } else {
               throw 'Could not launch $url';
             }
-          },
+          }, //onPressed
         ),
       );
     }
