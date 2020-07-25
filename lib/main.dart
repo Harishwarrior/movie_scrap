@@ -46,10 +46,6 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
   bool completed;
 
-  List<Movie> _searchResult = [];
-
-  List<Movie> _movieDetails = [];
-
   final String url = 'https://harishwarrior.github.io/JsonHosting/moviez.json';
 
   Future<List> getMovieMetadata() async {
@@ -227,14 +223,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  onSearchTextChanged(String text) {
+  onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {
+      setState(() {});
       return;
     }
     _movieDetails.forEach((movieDetail) {
       if (movieDetail.normalizedName.contains(text))
         _searchResult.add(movieDetail);
     });
+    setState(() {});
   }
 }
+
+List<Movie> _searchResult = [];
+
+List<Movie> _movieDetails = [];
