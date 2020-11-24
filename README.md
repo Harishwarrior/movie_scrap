@@ -1,8 +1,9 @@
-## Discontinued
+# Discontinued
 
 # moviescrap
 
 Single click movie downloader app.
+I don't support piracy by any mean. Use this app at your own risk.
 
 # Screenshots
 
