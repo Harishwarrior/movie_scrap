@@ -1,5 +1,4 @@
 import 'package:day_night_switch/day_night_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviescrap/src/theme/theme_notifier.dart';
 import 'package:moviescrap/src/theme/theme.dart';

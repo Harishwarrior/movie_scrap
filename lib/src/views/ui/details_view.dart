@@ -13,7 +13,7 @@ class DetailPage extends StatelessWidget {
     RegExp exp = new RegExp(r"[0-9]+(\.[0-9])?(GB|MB|gb|mb)");
     String match = exp.stringMatch(Uri.decodeComponent(url));
     if (match == null) {
-      return 'link';
+      return 'Unknown Size';
     } else {
       return match;
     }
@@ -39,7 +39,7 @@ class DetailPage extends StatelessWidget {
           onLongPress: () {
             Clipboard.setData(new ClipboardData(text: magnet));
             _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text('Magnet link copied to clipboard'),
+              content: const Text('Magnet link copied to clipboard'),
               duration: Duration(seconds: 3),
             ));
           },

@@ -1,1 +1,1 @@
-final String url = 'https://harishwarrior.github.io/JsonHosting/movies.json';
+const String url = 'https://harishwarrior.github.io/JsonHosting/movies.json';
