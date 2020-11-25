@@ -13,33 +13,28 @@ I don't support piracy by any mean. Use this app at your own risk.
      <td>link</td>
      <td>settings</td>
      <td>about</td>
-
-    
   </tr>
   <tr>
     <td><img src="screenshots/home.jpg" width=108  height=234></td>
     <td><img src="screenshots/link.jpg" width=108  height=234></td>
     <td><img src="screenshots/settings.jpg" width=108    height=234></td>
     <td><img src="screenshots/about.jpg" width=108  height=234></td>
-     </tr>
+   </tr>
  </table>
 
 <table>
-<tr>
-     <td>Staff_login</td>
-     <td>Attendance</td>
-     <td>Admin</td>
-     <td>Upload_notes</td>
-     
-     
-</tr>
-<tr>
-<td><img src="screenshots/home_light.jpg" width=108  height=234></td>
+  <tr>
+     <td>home light theme</td>
+     <td>link light theme</td>
+     <td>settings light theme</td>
+     <td>about light theme</td>  
+  </tr>
+  <tr>
+    <td><img src="screenshots/home_light.jpg" width=108  height=234></td>
     <td><img src="screenshots/link_light.jpg" width=108  height=234></td>
     <td><img src="screenshots/settings_light.jpg" width=108  height=234></td>
     <td><img src="screenshots/about_light.jpg" width=108  height=234></td>
-</tr>
-
+  </tr>
 </table>
 
 # Features
