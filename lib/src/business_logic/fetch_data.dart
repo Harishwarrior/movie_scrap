@@ -7,7 +7,7 @@ class FetchData {
   List<Movie> movieDetails = [];
 
   Future<List> getMovieMetadata() async {
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(url));
     final responseJson = json.decode(response.body);
 
     for (Map movie in responseJson) {
