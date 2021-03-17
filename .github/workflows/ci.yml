@@ -4,7 +4,6 @@ on:
     branches:
       - search
 
-jobs:
   build_ios:
     name: Build Flutter (iOS)
     needs: [flutter_test]
