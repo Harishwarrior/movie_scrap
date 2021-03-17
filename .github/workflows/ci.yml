@@ -1,8 +1,8 @@
 name: CI
 on:
-  push:
-    branches:
-      - search
+#   push:
+#     branches:
+#       - search
 
   build_ios:
     name: Build Flutter (iOS)
