@@ -1,9 +1,27 @@
-# Discontinued
+<h1 align='center'>
+moviescrap
+  </h1>
 
-# moviescrap
-
+<p align='center'>
 Single click movie downloader app.
 I don't support piracy by any mean. Use this app at your own risk.
+</p>
+
+<p align="center">
+         
+  <a href="https://github.com/Harishwarrior/movie_scrap/releases">
+ <img src="https://img.shields.io/github/v/tag/Harishwarrior/movie_scrap?color=green"
+         alt="Releases"></a>
+         
+  <img src="https://img.shields.io/tokei/lines/github/Harishwarrior/movie_scrap?color=dodgerblue" alt="lines of code">
+  
+  
+  <a href="http://github.com/Harishwarrior/movie_scrap/issues">
+      <img src="https://img.shields.io/github/issues/Harishwarrior/movie_scrap?color=blueviolet" alt="issues">
+  </a>
+  
+  <img src="https://img.shields.io/github/downloads/Harishwarrior/movie_scrap/total?color=mediumvioletred" alt="downloads">
+ 
 
 # Screenshots
 
