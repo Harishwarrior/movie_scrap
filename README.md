@@ -1,9 +1,27 @@
-# Discontinued
+<h1 align='center'>
+moviescrap
+  </h1>
 
-# moviescrap
-
+<p align='center'>
 Single click movie downloader app.
 I don't support piracy by any mean. Use this app at your own risk.
+</p>
+
+<p align="center">
+         
+  <a href="https://github.com/Harishwarrior/movie_scrap/releases">
+ <img src="https://img.shields.io/github/v/tag/Harishwarrior/movie_scrap?style=for-the-badge"
+         alt="Releases"></a>
+         
+  <img src="https://img.shields.io/tokei/lines/github/Harishwarrior/movie_scrap?style=for-the-badge" alt="lines of code">
+  
+  
+  <a href="http://github.com/Harishwarrior/movie_scrap/issues">
+      <img src="https://img.shields.io/github/issues/Harishwarrior/movie_scrap?style=for-the-badge" alt="issues">
+  </a>
+  
+  <img src="https://img.shields.io/github/downloads/Harishwarrior/movie_scrap/total?style=for-the-badge" alt="downloads">
+ 
 
 # Screenshots
 
@@ -44,15 +62,3 @@ I don't support piracy by any mean. Use this app at your own risk.
 - Friendly UI.
 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
