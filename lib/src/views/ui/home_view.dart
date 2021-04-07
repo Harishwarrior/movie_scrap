@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviescrap/src/business_logic/fetch_data.dart';
 import 'package:moviescrap/src/models/movie.dart';
 import 'package:moviescrap/src/views/ui/settings_view.dart';
+import 'package:moviescrap/src/views/widgets/shimmer_widget.dart';
 
 import 'details_view.dart';
 
@@ -112,11 +113,7 @@ class _HomePageState extends State<HomePage> {
               future: movieList,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(
-                    child: LinearProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                    ),
-                  );
+                  return ShimmerList();
                 } else {
                   return Expanded(
                     child: _searchResult.length != 0 ||
