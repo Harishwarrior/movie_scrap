@@ -185,7 +185,6 @@ class _HomePageState extends State<HomePage> {
     _searchResult.clear();
     if (text.isEmpty) {
       setState(() {});
-      return;
     }
     fetchData.movieDetails.forEach((_movieDetail) {
       if (_movieDetail.normalizedName.contains(text)) {
