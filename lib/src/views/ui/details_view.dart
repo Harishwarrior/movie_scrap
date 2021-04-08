@@ -10,7 +10,7 @@ class DetailPage extends StatelessWidget {
   DetailPage(this.movie);
 
   String fileSize(String url) {
-    RegExp exp = new RegExp(r"[0-9]+(\.[0-9])?(GB|MB|gb|mb)");
+    final RegExp exp = new RegExp(r"[0-9]+(\.[0-9])?(GB|MB|gb|mb)");
     String match = exp.stringMatch(Uri.decodeComponent(url));
     if (match == null) {
       return 'Unknown Size';
@@ -23,11 +23,10 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
-    var commentWidgets = List<Widget>();
+    var commentWidgets = [];
     for (String magnet in movie.magnets) {
       commentWidgets.add(
-        OutlineButton(
-          highlightColor: Colors.blue,
+        OutlinedButton(
           child: Text(
             fileSize(magnet),
             style: TextStyle(
@@ -35,10 +34,9 @@ class DetailPage extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 fontSize: 18.0),
           ),
-          color: Colors.pinkAccent,
           onLongPress: () {
             Clipboard.setData(new ClipboardData(text: magnet));
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: const Text('Magnet link copied to clipboard'),
               duration: Duration(seconds: 3),
             ));
