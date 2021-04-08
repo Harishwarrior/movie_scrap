@@ -5,7 +5,10 @@ moviescrap
 <p align='center'>
 Single click movie downloader app.
   
-Made with Flutter❤️. Works in Android,iOS, Web, Windows, Mac os, Linux
+Made with Flutter❤️. 
+
+Works in Android,iOS, Web, Windows, Mac os, Linux.
+
 I don't support piracy by any mean. Use this app at your own risk.
 </p>
 
