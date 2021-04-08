@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
   bool completed;
   Future<List> movieList;
-  List<Movie> _searchResult = [];
+  final List<Movie> _searchResult = [];
   FetchData fetchData = FetchData();
 
   //getMovieMetadata
@@ -34,11 +34,11 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Movie",
+              'Movie',
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Text(
-              "Scrap",
+              'Scrap',
               style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
             )
           ],
@@ -60,14 +60,14 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        child: Icon(
-          Icons.refresh,
-        ),
         onPressed: () {
           setState(() {
             fetchData.getMovieMetadata();
           });
         },
+        child: Icon(
+          Icons.refresh,
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -116,12 +116,21 @@ class _HomePageState extends State<HomePage> {
                   return ShimmerList();
                 } else {
                   return Expanded(
-                    child: _searchResult.length != 0 ||
+                    child: _searchResult.isNotEmpty ||
                             controller.text.isNotEmpty
                         ? ListView.builder(
                             itemCount: _searchResult.length,
                             itemBuilder: (context, index) {
                               return Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.lightBlue,
+                                      blurRadius: 0.1,
+                                      offset: Offset(0.0, 0.5),
+                                    ),
+                                  ],
+                                ),
                                 child: Card(
                                   elevation: 5.0,
                                   child: ListTile(
@@ -138,15 +147,6 @@ class _HomePageState extends State<HomePage> {
                                       );
                                     },
                                   ),
-                                ),
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.lightBlue,
-                                      blurRadius: 0.1,
-                                      offset: Offset(0.0, 0.5),
-                                    ),
-                                  ],
                                 ),
                               );
                             },
@@ -181,15 +181,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  onSearchTextChanged(String text) async {
+  Future<void> onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {
       setState(() {});
       return;
     }
     fetchData.movieDetails.forEach((_movieDetail) {
-      if (_movieDetail.normalizedName.contains(text))
+      if (_movieDetail.normalizedName.contains(text)) {
         _searchResult.add(_movieDetail);
+      }
     });
     setState(() {});
   }

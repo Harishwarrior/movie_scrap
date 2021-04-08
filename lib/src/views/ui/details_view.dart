@@ -10,8 +10,8 @@ class DetailPage extends StatelessWidget {
   DetailPage(this.movie);
 
   String fileSize(String url) {
-    final RegExp exp = new RegExp(r"[0-9]+(\.[0-9])?(GB|MB|gb|mb)");
-    String match = exp.stringMatch(Uri.decodeComponent(url));
+    final exp = RegExp(r'[0-9]+(\.[0-9])?(GB|MB|gb|mb)');
+    var match = exp.stringMatch(Uri.decodeComponent(url));
     if (match == null) {
       return 'Unknown Size';
     } else {
@@ -21,21 +21,13 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey =
-        new GlobalKey<ScaffoldState>();
-    var commentWidgets = [];
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    final commentWidgets = <Widget>[];
     for (String magnet in movie.magnets) {
       commentWidgets.add(
         OutlinedButton(
-          child: Text(
-            fileSize(magnet),
-            style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0),
-          ),
           onLongPress: () {
-            Clipboard.setData(new ClipboardData(text: magnet));
+            Clipboard.setData(ClipboardData(text: magnet));
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: const Text('Magnet link copied to clipboard'),
               duration: Duration(seconds: 3),
@@ -48,7 +40,14 @@ class DetailPage extends StatelessWidget {
             } else {
               throw 'Could not launch $url';
             }
-          }, //onPressed
+          },
+          child: Text(
+            fileSize(magnet),
+            style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0),
+          ), //onPressed
         ),
       );
     }

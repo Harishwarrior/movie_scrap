@@ -5,8 +5,8 @@ import 'package:shimmer/shimmer.dart';
 class ShimmerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int offset = 0;
-    int time = 800;
+    var offset = 0;
+    var time = 800;
 
     return SafeArea(
       child: ListView.builder(
@@ -22,8 +22,8 @@ class ShimmerList extends StatelessWidget {
             child: Shimmer.fromColors(
               highlightColor: Colors.white,
               baseColor: Colors.grey[300],
-              child: ShimmerLayout(),
               period: Duration(milliseconds: time),
+              child: ShimmerLayout(),
             ),
           );
         },

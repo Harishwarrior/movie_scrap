@@ -49,6 +49,6 @@ class _SettingsPageState extends State<SettingsPage> {
         ? themeNotifier.setTheme(darkTheme)
         : themeNotifier.setTheme(lightTheme);
     var prefs = await SharedPreferences.getInstance();
-    prefs.setBool('darkMode', value);
+    await prefs.setBool('darkMode', value);
   }
 }
