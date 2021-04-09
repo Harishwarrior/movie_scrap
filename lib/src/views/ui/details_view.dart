@@ -23,7 +23,7 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     final commentWidgets = <Widget>[];
-    for (String magnet in movie.magnets) {
+    for (var magnet in movie.magnets as Iterable<String>) {
       commentWidgets.add(
         OutlinedButton(
           onLongPress: () {
@@ -64,7 +64,7 @@ class DetailPage extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  movie.name,
+                  movie.name!,
                   style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
                 ),
               ),

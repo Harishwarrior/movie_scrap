@@ -21,7 +21,7 @@ class ShimmerList extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Shimmer.fromColors(
               highlightColor: Colors.white,
-              baseColor: Colors.grey[300],
+              baseColor: Colors.grey[300]!,
               period: Duration(milliseconds: time),
               child: ShimmerLayout(),
             ),

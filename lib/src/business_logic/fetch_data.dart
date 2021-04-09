@@ -11,7 +11,7 @@ class FetchData {
     final responseJson = json.decode(response.body);
 
     for (Map movie in responseJson) {
-      movieDetails.add(Movie.fromJson(movie));
+      movieDetails.add(Movie.fromJson(movie as Map<String, dynamic>));
     }
 
     return movieDetails;

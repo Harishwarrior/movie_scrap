@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
-  bool completed;
-  Future<List> movieList;
+  bool? completed;
+  Future<List>? movieList;
   final List<Movie> _searchResult = [];
   FetchData fetchData = FetchData();
 
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                   elevation: 5.0,
                                   child: ListTile(
                                     title: Text(
-                                      _searchResult[index].name,
+                                      _searchResult[index].name!,
                                     ),
                                     onTap: () {
                                       Navigator.push(
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                 elevation: 5.0,
                                 child: ListTile(
                                   title: Text(
-                                    fetchData.movieDetails[index].name,
+                                    fetchData.movieDetails[index].name!,
                                   ),
                                   onTap: () {
                                     Navigator.push(
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {});
     }
     fetchData.movieDetails.forEach((_movieDetail) {
-      if (_movieDetail.normalizedName.contains(text)) {
+      if (_movieDetail.normalizedName!.contains(text)) {
         _searchResult.add(_movieDetail);
       }
     });
