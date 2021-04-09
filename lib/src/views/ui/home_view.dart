@@ -3,7 +3,7 @@ import 'package:moviescrap/src/business_logic/fetch_data.dart';
 import 'package:moviescrap/src/models/movie.dart';
 import 'package:moviescrap/src/views/ui/settings_view.dart';
 import 'package:moviescrap/src/views/widgets/shimmer_widget.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'details_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -113,7 +113,17 @@ class _HomePageState extends State<HomePage> {
               future: movieList,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
-                  return ShimmerList();
+                  if (kIsWeb) {
+                    return Center(
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.blue,
+                      ),
+                    );
+                    // running on the web!
+                  } else {
+                    // NOT running on the web! You can check for additional platforms here.
+                    return ShimmerList();
+                  }
                 } else {
                   return Expanded(
                     child: _searchResult.isNotEmpty ||

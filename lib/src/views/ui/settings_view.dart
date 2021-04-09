@@ -1,4 +1,4 @@
-import 'package:day_night_switch/day_night_switch.dart';
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:moviescrap/src/theme/theme_notifier.dart';
 import 'package:moviescrap/src/theme/theme.dart';
@@ -25,18 +25,15 @@ class _SettingsPageState extends State<SettingsPage> {
         children: <Widget>[
           ListTile(
             title: Text('Dark Theme'),
-            contentPadding: const EdgeInsets.only(left: 16.0),
-            trailing: Transform.scale(
-              scale: 0.4,
-              child: DayNightSwitch(
-                value: _darkTheme,
-                onChanged: (val) {
-                  setState(() {
-                    _darkTheme = val;
-                  });
-                  onThemeChanged(val, themeNotifier);
-                },
-              ),
+            contentPadding: const EdgeInsets.all(16.0),
+            trailing: DayNightSwitcher(
+              isDarkModeEnabled: _darkTheme,
+              onStateChanged: (val) {
+                setState(() {
+                  _darkTheme = val;
+                });
+                onThemeChanged(val, themeNotifier);
+              },
             ),
           )
         ],
