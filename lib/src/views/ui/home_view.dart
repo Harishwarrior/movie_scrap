@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:moviescrap/src/business_logic/fetch_data.dart';
 import 'package:moviescrap/src/models/movie.dart';
 import 'package:moviescrap/src/views/ui/settings_view.dart';
 import 'package:moviescrap/src/views/widgets/shimmer_widget.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'details_view.dart';
 
 class HomePage extends StatefulWidget {

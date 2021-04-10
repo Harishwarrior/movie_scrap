@@ -1,9 +1,10 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:moviescrap/src/theme/theme_notifier.dart';
 import 'package:moviescrap/src/theme/theme.dart';
+import 'package:moviescrap/src/theme/theme_notifier.dart';
+import 'package:moviescrap/src/theme/theme_shared_pref.dart';
+import 'package:moviescrap/src/views/ui/about_view.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -35,17 +36,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 onThemeChanged(val, themeNotifier);
               },
             ),
-          )
+          ),
+          ListTile(
+            title: Text('About'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutView(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
-  }
-
-  void onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
-    (value)
-        ? themeNotifier.setTheme(darkTheme)
-        : themeNotifier.setTheme(lightTheme);
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('darkMode', value);
   }
 }

@@ -7,6 +7,7 @@ import '../../models/movie.dart';
 
 class DetailPage extends StatelessWidget {
   final Movie movie;
+
   DetailPage(this.movie);
 
   @override

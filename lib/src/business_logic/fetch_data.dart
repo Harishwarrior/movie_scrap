@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:moviescrap/src/models/movie.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:moviescrap/src/models/movie.dart';
 import 'package:moviescrap/src/utils/constants.dart';
 
 class FetchData {
