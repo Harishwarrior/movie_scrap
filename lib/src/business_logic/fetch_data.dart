@@ -13,7 +13,6 @@ class FetchData {
     for (Map movie in responseJson) {
       movieDetails.add(Movie.fromJson(movie as Map<String, dynamic>));
     }
-
     return movieDetails;
   }
 }

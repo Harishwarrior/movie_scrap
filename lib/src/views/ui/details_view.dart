@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moviescrap/src/business_logic/get_file_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/movie.dart';
 
 class DetailPage extends StatelessWidget {
   final Movie movie;
-
   DetailPage(this.movie);
-
-  String fileSize(String url) {
-    final exp = RegExp(r'[0-9]+(\.[0-9])?(GB|MB|gb|mb)');
-    var match = exp.stringMatch(Uri.decodeComponent(url));
-    if (match == null) {
-      return 'Unknown Size';
-    } else {
-      return match;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     final commentWidgets = <Widget>[];
-    for (var magnet in movie.magnets as Iterable<String>) {
+    for (var magnet in movie.magnets as List<dynamic>) {
       commentWidgets.add(
         OutlinedButton(
           onLongPress: () {

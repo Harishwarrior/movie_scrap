@@ -58,17 +58,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        onPressed: () {
-          setState(() {
-            fetchData.getMovieMetadata();
-          });
-        },
-        child: Icon(
-          Icons.refresh,
-        ),
-      ),
       body: Column(
         children: <Widget>[
           Container(
