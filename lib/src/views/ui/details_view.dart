@@ -13,35 +13,6 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
-    final commentWidgets = <Widget>[];
-    for (var magnet in movie.magnets as List<dynamic>) {
-      commentWidgets.add(
-        OutlinedButton(
-          onLongPress: () {
-            Clipboard.setData(ClipboardData(text: magnet));
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: const Text('Magnet link copied to clipboard'),
-              duration: Duration(seconds: 3),
-            ));
-          },
-          onPressed: () async {
-            var url = magnet;
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
-          },
-          child: Text(
-            fileSize(magnet),
-            style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0),
-          ), //onPressed
-        ),
-      );
-    }
 
     return Scaffold(
       key: _scaffoldKey,
@@ -61,9 +32,33 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             Container(
-              child: Column(
-                children: commentWidgets,
-              ),
+              child: Column(children: <Widget>[
+                for (var magnet in movie.magnets!)
+                  OutlinedButton(
+                    onLongPress: () {
+                      Clipboard.setData(ClipboardData(text: magnet));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: const Text('Magnet link copied to clipboard'),
+                        duration: Duration(seconds: 3),
+                      ));
+                    },
+                    onPressed: () async {
+                      var url = magnet;
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: Text(
+                      fileSize(magnet),
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.0),
+                    ), //onPressed
+                  ),
+              ]),
             )
           ],
         ),
