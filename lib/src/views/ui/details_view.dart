@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviescrap/src/business_logic/get_file_size.dart';
+import 'package:moviescrap/src/business_logic/launch_url.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/movie.dart';
@@ -26,14 +27,14 @@ class DetailPage extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  movie.name!,
+                  movie.name,
                   style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
             Container(
               child: Column(children: <Widget>[
-                for (var magnet in movie.magnets!)
+                for (var magnet in movie.magnets)
                   OutlinedButton(
                     onLongPress: () {
                       Clipboard.setData(ClipboardData(text: magnet));
@@ -42,14 +43,7 @@ class DetailPage extends StatelessWidget {
                         duration: Duration(seconds: 3),
                       ));
                     },
-                    onPressed: () async {
-                      var url = magnet;
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
+                    onPressed: () => launchUrl(magnet),
                     child: Text(
                       fileSize(magnet),
                       style: TextStyle(
