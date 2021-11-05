@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                                   elevation: 5.0,
                                   child: ListTile(
                                     title: Text(
-                                      _searchResult[index].name,
+                                      _searchResult[index].name.trim(),
                                     ),
                                     onTap: () {
                                       Navigator.push(

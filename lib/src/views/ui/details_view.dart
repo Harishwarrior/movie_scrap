@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviescrap/src/business_logic/get_file_size.dart';
 import 'package:moviescrap/src/business_logic/launch_url.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 import '../../models/movie.dart';
 
